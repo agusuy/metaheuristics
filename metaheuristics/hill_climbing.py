@@ -25,7 +25,9 @@ def hill_climbing(problem, steps=100, delta=1, initial=None):
             break # local optimum has been reached
         yield current
 
-def test1():
-     from .test_problems import hello_world
-     for step in hill_climbing(hello_world(), steps=10000):
-         print(step, ''.join(map(chr, step[0])))
+def test1(problem=None):
+    if not problem:
+        from .test_problems import hello_world
+        problem = hello_world()
+    for step in hill_climbing(problem, steps=10000):
+        print(step, ''.join(map(chr, step[0])))
