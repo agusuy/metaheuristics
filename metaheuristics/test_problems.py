@@ -2,6 +2,7 @@
 
 Test functions for benchmarking optimization techniques.
 """
+from math import sin
 from .problem import OptimizationProblem
 
 def hello_world(target_str="Hello world!"):
@@ -17,4 +18,4 @@ def __schaffer_N2__(elem):
     (x,y) = elem
     return 0.5 + (sin(sin(x*x - y*y)) - 0.5)/((1 + 0.001 * (x*x + y*y)) ** 2)
 
-SCHAFFER_N2 = OptimizationProblem(((-100,+100),)*2, __schaffer_N2__)
+SCHAFFER_N2 = OptimizationProblem(domains= ((-100,+100),)*2, objective=__schaffer_N2__)
