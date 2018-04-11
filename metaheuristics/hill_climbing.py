@@ -5,8 +5,8 @@ def surroundings(center, radius, domains):
     one value that has been increased or decreased by `radius`.
     """
     return [center[0:i] + (center[i] + d,) + center[i + 1:]
-               for i in range(len(center)) for d in (-radius, +radius) 
-               if center[i] - radius >= domains[i][0] and center[i] + radius <= domains[i][1]
+               for i in range(len(center)) for d in (-radius, +radius)
+               if center[i] + d >= domains[i][0] and center[i] + d <= domains[i][1]
            ]
 
 def hill_climbing(problem, steps=100, delta=1, initial=None):
