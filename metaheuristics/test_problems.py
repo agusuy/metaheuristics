@@ -2,8 +2,8 @@
 
 Test functions for benchmarking optimization techniques.
 """
-from math import sin
-from .problem import OptimizationProblem
+from math import sin, sqrt
+from problem import OptimizationProblem
 
 def hello_world(target_str="Hello world!"):
     target_chars = tuple(map(ord, target_str))
@@ -21,3 +21,9 @@ def __schaffer_N2__(elem):
     return 0.5 + (sin(x*x - y*y) ** 2 - 0.5)/((1 + 0.001 * (x*x + y*y)) ** 2)
 
 SCHAFFER_N2 = OptimizationProblem(domains= ((-100,+100),)*2, objective=__schaffer_N2__)
+
+def eggholder():
+    return OptimizationProblem(
+        domains = ((-512,512),) * 2,
+        objective = lambda elem : - (elem[1] + 47) * sin( sqrt( abs( elem[1] + elem[0]/2 + 47) ) ) - elem[0] * sin( sqrt( abs( elem[0] - ( elem[1] + 47 ) ) ) )
+    )
