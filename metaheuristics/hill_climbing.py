@@ -18,16 +18,25 @@ def hill_climbing(problem, steps=100, delta=1, initial=None):
     yield current
     for step in range(steps):
         nexts = problem.evaluated(surroundings(current[0], delta, problem.domains))
-        current = nexts[0]
+        if(len(nexts) >= 1):
+            current = nexts[0]
         if problem.compareEvaluations(lastEval, current[1]) > 0:
             lastEval = current[1]
         else:
             break # local optimum has been reached
         yield current
 
-def test1(problem=None):
-    if not problem:
-        from .test_problems import hello_world
-        problem = hello_world()
-    for step in hill_climbing(problem, steps=10000):
-        print(step, ''.join(map(chr, step[0])))
+def hill_climbing_restart(problem, steps=100, delta=1, initial=None, iterations=1):
+    """ Hill climbing with restart optimization implemented as a generator function.
+        Returns the optimal result
+    """
+    optimal = (None, None)
+    for iter in range(iterations):
+        for step in hill_climbing(problem=problem, steps=steps, delta=delta, initial=initial):
+            current = step
+        if optimal[0] is None:
+            optimal = current
+        elif problem.compareEvaluations(optimal[1], current[1]) > 0:
+            optimal = current
+    return optimal
+
