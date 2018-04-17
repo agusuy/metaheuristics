@@ -13,8 +13,9 @@ def sim_annealing(problem):
     t_big = 1.0
     t_min = 0.00001
     alpha = 0.9
+    current_actual = current
     while t_big > t_min:
-        nexts = problem.evaluated(surroundings(current[0], 1, problem.domains), sorted=False)
+        nexts = problem.evaluated(surroundings(current_actual[0], 1, problem.domains), sorted=False)
         if len(nexts) >= 1:
             current = nexts[random.randint(0, len(nexts)-1)]
         try:
@@ -25,5 +26,6 @@ def sim_annealing(problem):
             continue
         if problem.compareEvaluations(lastEval, current[1]) > 0 or prob > random.uniform(0, 1):
             lastEval = current[1]
+            current_actual = current
         t_big *= alpha
-    return current
+    return current_actual
