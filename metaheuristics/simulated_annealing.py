@@ -3,18 +3,18 @@ import random
 import math
 from .hill_climbing import surroundings
 
-def temp_function(T,k,t):
-    return T*(k**t)
+def temp_function(Tmax,k,t):
+    return Tmax*(k**t)
 
-def simulated_annealing(problem, T0=1000, k=0.999, delta=1, initial=None):
+def simulated_annealing(problem, Tmax=1000, Tmin=0.05, k=0.999, delta=1, initial=None):
     current = problem.randomElement()
     lastEval = problem.objective(current)
     current = (current, lastEval)
     yield current
 
-    T = T0
+    T = Tmax
     t=1
-    while T > 0.05:
+    while T > Tmin:
         nexts = problem.evaluated(surroundings(current[0], delta, problem.domains))
         if(nexts):
             siguiente = nexts[random.randint(0, len(nexts) - 1)]
@@ -29,7 +29,7 @@ def simulated_annealing(problem, T0=1000, k=0.999, delta=1, initial=None):
                 if(random.random() <= prob):
                     current = siguiente
 
-        T = temp_function(T0,k,t)
+        T = temp_function(Tmax,k,t)
         t+=1
         yield current
 
