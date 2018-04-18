@@ -27,7 +27,7 @@ def test4(problem=None):
     if not problem:
         import test_problems
         problem = test_problems.alfiles()
-    for step in simulated_annealing(problem,6, 1):
+    for step in simulated_annealing(problem,8, 1):
         print (step)
 
 test4()
