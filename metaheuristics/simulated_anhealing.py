@@ -22,7 +22,6 @@ def simulated_annealing(problem, temp_i0, heat_coef, delta=1, time_step=1):
             else:
                 delta_temp = abs(next_elem[1] - current[1])
                 probability = math.e ** ( - delta_temp / heat)
-                print (probability)
                 if (random.uniform(0,1) <= probability):
                     current = next_elem
         heat = function(time)
