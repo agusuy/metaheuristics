@@ -38,7 +38,7 @@ def objective_function(elem):
     for i in range(0, len(elem)):
         ya = int( elem[i] / len(elem))
         xa = elem[i] % len(elem)
-        sumaTotal += board[i]
+        sumaTotal += board[elem[i]]
         for k in range(0, len(elem)):
             if k == i:
                 continue
@@ -47,13 +47,13 @@ def objective_function(elem):
             xc = alfil % len(elem)
             for j in range (0, 8):
                 if (xc == xa + j) and (yc == ya + j):
-                    alfilesAtacandose -= len(elem) + 1 - board[k]
+                    alfilesAtacandose -= len(elem) + 1 - board[elem[k]]
                 elif (xc == xa + j) and (yc == ya - j):
-                    alfilesAtacandose -= len(elem) + 1 - board[k]
+                    alfilesAtacandose -= len(elem) + 1 - board[elem[k]]
                 elif (xc == xa - j) and (yc == ya + j):
-                    alfilesAtacandose -= len(elem) + 1 - board[k]
+                    alfilesAtacandose -= len(elem) + 1 - board[elem[k]]
                 elif (xc == xa - j) and (yc == ya - j):
-                    alfilesAtacandose -= len(elem) + 1 - board[k]
+                    alfilesAtacandose -= len(elem) + 1 - board[elem[k]]
     if alfilesAtacandose:
         return alfilesAtacandose
     else:
