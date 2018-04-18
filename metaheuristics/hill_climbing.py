@@ -10,7 +10,7 @@ def surroundings(center, radius, domains):
            ]
 
 def hill_climbing(problem, steps=100, delta=1, initial=None):
-    """ Hill climbing optimization implemented as a generator function. 
+    """ Hill climbing optimization implemented as a generator function.
     """
     current = initial or problem.randomElement()
     lastEval = problem.objective(current)
@@ -25,9 +25,26 @@ def hill_climbing(problem, steps=100, delta=1, initial=None):
             break # local optimum has been reached
         yield current
 
-def test1(problem=None):
-    if not problem:
-        from .test_problems import hello_world
-        problem = hello_world()
-    for step in hill_climbing(problem, steps=10000):
-        print(step, ''.join(map(chr, step[0])))
+def schaffer_n2():
+    from .test_problems import SCHAFFER_N2
+    problem = SCHAFFER_N2
+    finalStep = list(hill_climbing(problem, steps=10000))[-1]
+    print(finalStep)
+
+def bukin_n6():
+    from .test_problems import BUKIN_N6
+    problem = BUKIN_N6
+    finalStep = list(hill_climbing(problem, steps=100000))[-1]
+    print(finalStep)
+
+def sum_squares():
+    from .test_problems import SUM_SQUARES
+    problem = SUM_SQUARES
+    finalStep = list(hill_climbing(problem, steps=10000))[-1]
+    print(finalStep)
+
+def hello_world():
+    from .test_problems import hello_world
+    problem = hello_world()
+    finalStep = list(hill_climbing(problem, steps=10000))[-1]
+    print("".join(map(chr,finalStep[0])), finalStep[1])
