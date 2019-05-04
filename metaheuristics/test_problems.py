@@ -5,7 +5,7 @@ Test functions for benchmarking optimization techniques.
 from math import sin
 from .problem import OptimizationProblem
 
-def hello_world(target_str="Hello world!"):
+def hello_world(target_str="Hello!"):
     target_chars = tuple(map(ord, target_str))
     return OptimizationProblem(
         domains = ((32, 126),) * len(target_str),
