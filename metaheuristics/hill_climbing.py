@@ -9,21 +9,38 @@ def surroundings(center, radius, domains):
                if center[i] + d >= domains[i][0] and center[i] + d <= domains[i][1]
            ]
 
-def hill_climbing(problem, steps=100, delta=1, initial=None):
+def hill_climbing(problem, steps=100, delta=1, initial=None, restarts=0):
     """ Hill climbing optimization implemented as a generator function. 
     """
-    current = initial or problem.randomElement()
-    lastEval = problem.objective(current)
-    current = (current, lastEval)
-    yield current
-    for step in range(steps):
-        nexts = problem.evaluated(surroundings(current[0], delta, problem.domains))
-        current = nexts[0]
-        if problem.compareEvaluations(lastEval, current[1]) > 0:
-            lastEval = current[1]
+    result = None
+
+    bests = []
+    for i in range(restarts + 1):
+        actuals = []
+        current = initial or problem.randomElement()
+        lastEval = problem.objective(current)
+        current = (current, lastEval)
+        actuals.append(current)
+    
+        for step in range(steps):
+            nexts = problem.evaluated(surroundings(current[0], delta, problem.domains))
+            current = nexts[0]
+            if problem.compareEvaluations(lastEval, current[1]) > 0:
+                lastEval = current[1]
+            else:
+                break # local optimum has been reached
+            actuals.append(current)
+
+        if (result):
+            if problem.compareEvaluations(result, lastEval) > 0:
+                result = lastEval
+                bests = actuals
         else:
-            break # local optimum has been reached
-        yield current
+            result = lastEval
+            bests = actuals
+    return bests
+
+    
 
 def test1(problem=None):
     if not problem:
